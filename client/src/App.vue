@@ -4,9 +4,17 @@
 
 <script>
 export default {
+  data() {
+    return {
+      vscode: null
+    }
+  },
+  mounted() {
+    this.vscode = acquireVsCodeApi()
+  },
   methods: {
     sendMessage() {
-      console.log('message')
+      this.vscode.postMessage('showLogs')
     }
   }
 }

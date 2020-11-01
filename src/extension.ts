@@ -1,17 +1,9 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { Webview, Uri } from 'vscode';
-import * as path from 'path';
+import getHtmlTemp from './getHtmlTemp';
 
 export function activate(context: vscode.ExtensionContext) {
-  const getRelativeResource = (webview: Webview, relativePath: string) => {
-    // @ts-ignore
-    return webview.asWebviewUri(
-      Uri.file(path.join(context.extensionPath, relativePath))
-    );
-  };
-
   let showMergeLogs = vscode.commands.registerCommand(
     'merge-logs.showMergeLogs',
     () => {
@@ -28,25 +20,15 @@ export function activate(context: vscode.ExtensionContext) {
           retainContextWhenHidden: true,
         }
       );
-      panel.webview.html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MergeLogs</title>
-  <script type="module" src="${getRelativeResource(
-        panel.webview,
-        './client/dist/_assets/index.fa698dad.js'
-      )}"></script>
-  <link rel="stylesheet" href="${getRelativeResource(
-        panel.webview,
-        './client/dist/_assets/style.4f14ca88.css'
-      )}">
-</head>
-<body>
-  <div id="app"></div>
-</body>
-</html>`;
+      // 获取 html 模板
+      panel.webview.html = getHtmlTemp(panel.webview, context);
+      panel.webview.onDidReceiveMessage(
+        (message) => {
+          console.log('收到消息：', message);
+        },
+        undefined,
+        context.subscriptions
+      );
     }
   );
 
