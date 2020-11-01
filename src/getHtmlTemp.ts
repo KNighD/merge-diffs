@@ -23,19 +23,19 @@ const getHtmlTemp = (
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MergeLogs</title>
   <script type="module" src="${getRelativeResource(
-  webview,
-  context.extensionPath,
-  './client/dist/_assets/index.34adcdbf.js',
-)}"></script>
+    webview,
+    context.extensionPath,
+    './client/dist/_assets/index.c7a58a50.js'
+  )}"></script>
   <link rel="stylesheet" href="${getRelativeResource(
-  webview,
-  context.extensionPath,
-  './client/dist/_assets/style.4f14ca88.css',
-)}">
+    webview,
+    context.extensionPath,
+    './client/dist/_assets/style.4f14ca88.css'
+  )}">
 </head>
 <body>
   <div id="app"></div>
 </body>
-</html>`;
+</html>`
 
 export default getHtmlTemp;

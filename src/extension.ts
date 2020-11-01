@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import getHtmlTemp from './getHtmlTemp';
+import getLogs from './getLogs';
 
 export function activate(context: vscode.ExtensionContext) {
   let showMergeLogs = vscode.commands.registerCommand(
@@ -23,8 +24,15 @@ export function activate(context: vscode.ExtensionContext) {
       // 获取 html 模板
       panel.webview.html = getHtmlTemp(panel.webview, context);
       panel.webview.onDidReceiveMessage(
-        (message) => {
-          console.log('收到消息：', message);
+        async (message) => {
+          if (message === 'getLogs') {
+            try {
+              const logs = await getLogs();
+              panel.webview.postMessage(logs);
+            } catch (error) {
+              panel.webview.postMessage(error);
+            }
+          }
         },
         undefined,
         context.subscriptions
