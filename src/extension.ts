@@ -1,9 +1,16 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { Webview, Uri } from 'vscode';
+import * as path from 'path';
+
+
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log('Congratulations, your extension "merge-logs" is now active!');
+  const getRelativeResource = (webview: Webview, relativePath: string) => {
+    // @ts-ignore
+    return webview.asWebviewUri(Uri.file(path.join(context.extensionPath, relativePath)));
+  };
 
   let show = vscode.commands.registerCommand('merge-logs.showMergeLogs', () => {
     const panel = vscode.window.createWebviewPanel(
@@ -19,7 +26,12 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       }
     );
-    panel.webview.html = `<html><body>test merge logs</body></html>`;
+    panel.webview.html = `<html>
+<head>
+<script src='${getRelativeResource(panel.webview, './test.js')}'></script>
+</head>
+<body>test merge logs</body>
+</html>`;
   });
 
   context.subscriptions.push(show);
