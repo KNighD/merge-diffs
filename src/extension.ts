@@ -1,8 +1,7 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import getHtmlTemp from './getHtmlTemp';
 import getLogs from './getLogs';
+import receiveMessageHandler from './receiveMessageHandler';
 
 export function activate(context: vscode.ExtensionContext) {
   let showMergeLogs = vscode.commands.registerCommand(
@@ -23,16 +22,11 @@ export function activate(context: vscode.ExtensionContext) {
       );
       // 获取 html 模板
       panel.webview.html = getHtmlTemp(panel.webview, context);
+      // 处理 webview 传来的消息
       panel.webview.onDidReceiveMessage(
         async (message) => {
-          if (message === 'getLogs') {
-            try {
-              const logs = await getLogs();
-              panel.webview.postMessage(logs);
-            } catch (error) {
-              panel.webview.postMessage(error);
-            }
-          }
+          const res = await receiveMessageHandler(message);
+          panel.webview.postMessage(res);
         },
         undefined,
         context.subscriptions
