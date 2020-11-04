@@ -25,12 +25,12 @@ const getHtmlTemp = (
   <script type="module" src="${getRelativeResource(
     webview,
     context.extensionPath,
-    './client/dist/_assets/index.c7a58a50.js'
+    './client/dist/_assets/index.js'
   )}"></script>
   <link rel="stylesheet" href="${getRelativeResource(
     webview,
     context.extensionPath,
-    './client/dist/_assets/style.4f14ca88.css'
+    './client/dist/_assets/style.css'
   )}">
 </head>
 <body>
