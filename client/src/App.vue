@@ -1,5 +1,8 @@
 <template>
   <div>当前分支：{{ currentBranch }}</div>
+  <a-button type="primary">
+    Primary
+  </a-button>
   <button @click="getLogs">getLogs</button>
 </template>
 
