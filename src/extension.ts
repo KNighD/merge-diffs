@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import getHtmlTemp from './getHtmlTemp';
-import getLogs from './getLogs';
 import receiveMessageHandler from './receiveMessageHandler';
 
 export function activate(context: vscode.ExtensionContext) {

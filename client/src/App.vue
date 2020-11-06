@@ -1,8 +1,6 @@
 <template>
-  <div>当前分支：{{ currentBranch }}</div>
-  <a-button type="primary">
-    Primary
-  </a-button>
+  <div>{{ currentBranch }}</div>
+  <a-button type="primary"> Primary </a-button>
   <button @click="getLogs">getLogs</button>
 </template>
 
@@ -31,17 +29,17 @@ export default {
       this.vscode.postMessage('getCurrentBranch')
     },
     handleMessage(message) {
-      if(message.code !== 0) {
+      if (message.code !== 0) {
         // TODO: show error
-        return;
+        return
       }
       const { type, data } = message.data
-      switch(type) {
+      switch (type) {
         case 'getLogs':
-          break;
+          break
         case 'getCurrentBranch':
           this.currentBranch = data
-          break;
+          break
       }
     },
   },
