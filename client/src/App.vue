@@ -1,46 +1,40 @@
 <template>
-  <div>{{ currentBranch }}</div>
-  <a-button type="primary"> Primary </a-button>
-  <button @click="getLogs">getLogs</button>
+  <BranchSelector
+    :branches="branches"
+    :value="firstBranch"
+    @change-branch="
+      (value) => {
+        firstBranch = value
+      }
+    "
+  />
+  <BranchSelector
+    :branches="branches"
+    :value="secondBranch"
+    @change-branch="
+      (value) => {
+        secondBranch = value
+      }
+    "
+  />
+  <a-button type="primary" @click="submit">提交</a-button>
 </template>
 
 <script>
+import BranchSelector from '/@/components/BranchSelector.vue'
+import useInit from '/@/composables/useInit'
+
 export default {
-  data() {
-    return {
-      vscode: null,
-      currentBranch: '',
-    }
+  components: {
+    BranchSelector,
   },
-  mounted() {
-    this.vscode = acquireVsCodeApi()
-    this.getCurrentBranch()
-    // 监听来自 vscode 插件的信息
-    window.addEventListener('message', (event) => {
-      const message = event.data
-      this.handleMessage(message)
-    })
+  setup() {
+    const { branches, firstBranch, secondBranch, submit } = useInit()
+    return { branches, firstBranch, secondBranch, submit }
   },
   methods: {
-    getLogs() {
-      this.vscode.postMessage('getLogs')
-    },
-    getCurrentBranch() {
-      this.vscode.postMessage('getCurrentBranch')
-    },
-    handleMessage(message) {
-      if (message.code !== 0) {
-        // TODO: show error
-        return
-      }
-      const { type, data } = message.data
-      switch (type) {
-        case 'getLogs':
-          break
-        case 'getCurrentBranch':
-          this.currentBranch = data
-          break
-      }
+    handleChange(value) {
+      this.firstBranch = value
     },
   },
 }

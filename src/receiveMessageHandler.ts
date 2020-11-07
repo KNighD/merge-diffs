@@ -1,31 +1,47 @@
-import asyncExec from './asyncExec';
+import asyncExec from './asyncExec'
+
+// 将 shell 打印的内容转成数组
+const transform = (stdout: string) =>
+  stdout
+    .trim()
+    .split('\n')
+    .map((i) => i.trim())
 
 const receiveMessageHandler = async (message: string) => {
   try {
-    let data;
-    switch (message) {
-      case 'getLogs':
-        data = await asyncExec('git log');
-        break;
-      case 'getCurrentBranch':
-        data = await asyncExec('git branch');
-        break;
+    // shell 输出的内容
+    let stdout
+    let resData
+    const { type, data } = JSON.parse(message)
+    switch (type) {
+      case 'getBranches':
+        stdout = await asyncExec('git branch -a')
+        resData = transform(stdout)
+        break
+      case 'showMergedBranches':
+        stdout = await Promise.all(
+          data.map((branch: string) =>
+            asyncExec(`git branch --merged ${branch}`)
+          )
+        )
+        resData = (stdout as string[]).map((value) => transform(value))
+        break
       default:
-        break;
+        break
     }
     return {
       code: 0,
       data: {
-        data,
-        type: message,
+        data: resData,
+        type,
       },
-    };
+    }
   } catch (error) {
     return {
       code: 1,
       data: error,
-    };
+    }
   }
-};
+}
 
-export default receiveMessageHandler;
+export default receiveMessageHandler
