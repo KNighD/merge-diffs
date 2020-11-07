@@ -9,6 +9,8 @@ export default function useInit() {
   const branches = ref([])
   const firstBranch = ''
   const secondBranch = ''
+  const firstMergedBranches = ref([])
+  const secondMergedBranches = ref([])
   const handleMessage = (message) => {
     if (message.code !== 0) {
       // TODO: show error
@@ -20,7 +22,8 @@ export default function useInit() {
         branches.value = data
         break
       case 'showMergedBranches':
-        console.log(data)
+        firstMergedBranches.value = data[0]
+        secondMergedBranches.value = data[1]
         break
     }
   }
@@ -41,5 +44,7 @@ export default function useInit() {
     firstBranch,
     secondBranch,
     submit,
+    firstMergedBranches,
+    secondMergedBranches,
   }
 }

@@ -4,7 +4,6 @@
     show-search
     placeholder="选择一个分支"
     option-filter-prop="children"
-    style="width: 200px"
     :filter-option="filterOption"
     @change="handleChange"
   >
@@ -23,7 +22,7 @@ export default {
     },
     value: {
       type: String,
-      default: ''
+      default: null
     },
   },
    emits: ['change-branch'],
