@@ -1,6 +1,8 @@
 {
 	"name": "merge-diffs",
 	"displayName": "merge-diffs",
+	"publisher": "knighd",
+	"repository": "https://github.com/KNighD/merge-diffs",
 	"description": "view all merged diffs of specific branches",
 	"version": "0.0.1",
 	"engines": {

@@ -1,6 +1,7 @@
 import path from 'path'
 
 export default {
+  outDir: path.resolve(__dirname, '../out/client/'),
   rollupOutputOptions: {
     entryFileNames: `[name].js`,
     chunkFileNames: `[name].js`,
