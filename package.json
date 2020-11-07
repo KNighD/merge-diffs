@@ -1,7 +1,7 @@
 {
-	"name": "merge-logs",
-	"displayName": "merge-logs",
-	"description": "view all git merge logs of current branch",
+	"name": "merge-diffs",
+	"displayName": "merge-diffs",
+	"description": "view all merged diffs of specific branches",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.50.0"
@@ -10,14 +10,14 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:merge-logs.showMergeLogs"
+		"onCommand:merge-diffs.showMergeDiffs"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "merge-logs.showMergeLogs",
-				"title": "MergeLogs: show"
+				"command": "merge-diffs.showMergeDiffs",
+				"title": "MergeDiffs"
 			}
 		]
 	},

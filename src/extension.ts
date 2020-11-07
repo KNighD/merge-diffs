@@ -3,13 +3,13 @@ import getHtmlTemp from './getHtmlTemp';
 import receiveMessageHandler from './receiveMessageHandler';
 
 export function activate(context: vscode.ExtensionContext) {
-  let showMergeLogs = vscode.commands.registerCommand(
-    'merge-logs.showMergeLogs',
+  let showMergeDiffs = vscode.commands.registerCommand(
+    'merge-diffs.showMergeDiffs',
     () => {
       const panel = vscode.window.createWebviewPanel(
         'testWebview',
         // title
-        'MergeLogs',
+        'MergeDiffs',
         // 显示在编辑器的哪个部位
         vscode.ViewColumn.One,
         {
@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  context.subscriptions.push(showMergeLogs);
+  context.subscriptions.push(showMergeDiffs);
 }
 
 // this method is called when your extension is deactivated

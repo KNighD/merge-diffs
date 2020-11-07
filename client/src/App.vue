@@ -19,9 +19,9 @@
       "
     />
     <a-button type="primary" @click="submit">提交</a-button>
-    <MergedBranches :data="firstMergedBranches" :title="firstBranch" />
-    <MergedBranches :data="secondMergedBranches" :title="secondBranch" />
-    <MergedBranches class="overlap-list" :data="secondMergedBranches" title="共同合并的分支" />
+    <MergedBranches :data="firstList" :title="firstBranch" />
+    <MergedBranches :data="secondList" :title="secondBranch" />
+    <MergedBranches class="intersection-list" :data="intersectionList" title="共同合并的分支" />
   </div>
 </template>
 
@@ -29,6 +29,8 @@
 import BranchSelector from '/@/components/BranchSelector.vue'
 import MergedBranches from '/@/components/MergedBranches.vue'
 import useInit from '/@/composables/useInit'
+import intersection from 'lodash/intersection'
+import without from 'lodash/without'
 
 export default {
   components: {
@@ -53,6 +55,17 @@ export default {
       secondMergedBranches,
     }
   },
+  computed: {
+    intersectionList() {
+      return intersection(this.firstMergedBranches, this.secondMergedBranches)
+    },
+    firstList() {
+      return without(this.firstMergedBranches, ...this.intersectionList)
+    },
+    secondList() {
+      return without(this.secondMergedBranches, ...this.intersectionList)
+    }
+  }
 }
 </script>
 
@@ -63,7 +76,7 @@ export default {
   grid-row-gap: 20px;
   grid-column-gap: 10px;
 }
-.overlap-list {
+.intersection-list {
   grid-column-start: 1;
   grid-column-end: 3; 
 }

@@ -7,8 +7,8 @@ export default function useInit() {
   const vscode = window.acquireVsCodeApi()
   vscode.postMessage(JSON.stringify({ type: 'getBranches' }))
   const branches = ref([])
-  const firstBranch = ''
-  const secondBranch = ''
+  const firstBranch = ref('')
+  const secondBranch = ref('')
   const firstMergedBranches = ref([])
   const secondMergedBranches = ref([])
   const handleMessage = (message) => {
@@ -35,7 +35,7 @@ export default function useInit() {
     vscode.postMessage(
       JSON.stringify({
         type: 'showMergedBranches',
-        data: [firstBranch, secondBranch],
+        data: [firstBranch.value, secondBranch.value],
       })
     )
   }
