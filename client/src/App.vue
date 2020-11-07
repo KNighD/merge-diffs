@@ -21,7 +21,11 @@
     <a-button type="primary" @click="submit">提交</a-button>
     <MergedBranches :data="firstList" :title="firstBranch" />
     <MergedBranches :data="secondList" :title="secondBranch" />
-    <MergedBranches class="intersection-list" :data="intersectionList" title="共同合并的分支" />
+    <MergedBranches
+      class="intersection-list"
+      :data="intersectionList"
+      title="共同合并的分支"
+    />
   </div>
 </template>
 
@@ -29,6 +33,7 @@
 import BranchSelector from '/@/components/BranchSelector.vue'
 import MergedBranches from '/@/components/MergedBranches.vue'
 import useInit from '/@/composables/useInit'
+import useReceiveMessage from '/@/composables/useReceiveMessage'
 import intersection from 'lodash/intersection'
 import without from 'lodash/without'
 
@@ -46,6 +51,11 @@ export default {
       firstMergedBranches,
       secondMergedBranches,
     } = useInit()
+    useReceiveMessage({
+      firstMergedBranches,
+      secondMergedBranches,
+      branches,
+    })
     return {
       branches,
       firstBranch,
@@ -64,8 +74,8 @@ export default {
     },
     secondList() {
       return without(this.secondMergedBranches, ...this.intersectionList)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -78,6 +88,6 @@ export default {
 }
 .intersection-list {
   grid-column-start: 1;
-  grid-column-end: 3; 
+  grid-column-end: 3;
 }
 </style>

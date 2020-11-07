@@ -11,26 +11,6 @@ export default function useInit() {
   const secondBranch = ref('')
   const firstMergedBranches = ref([])
   const secondMergedBranches = ref([])
-  const handleMessage = (message) => {
-    if (message.code !== 0) {
-      // TODO: show error
-      return
-    }
-    const { type, data } = message.data
-    switch (type) {
-      case 'getBranches':
-        branches.value = data
-        break
-      case 'showMergedBranches':
-        firstMergedBranches.value = data[0]
-        secondMergedBranches.value = data[1]
-        break
-    }
-  }
-  window.addEventListener('message', (event) => {
-    const message = event.data
-    handleMessage(message)
-  })
   const submit = () => {
     vscode.postMessage(
       JSON.stringify({
